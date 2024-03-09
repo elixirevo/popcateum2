@@ -157,7 +157,7 @@ Docker:
 
 ```shell
 docker run -d --name popcateum-node -v /Users/alice/popcateum:/root \
-           -p 8545:8545 -p 30303:30303 \
+           -p 9506:9506 -p 60606:60606 \
            popcateum/client-go
 ```
 
@@ -188,12 +188,12 @@ HTTP based JSON-RPC API options:
 
   * `--http` Enable the HTTP-RPC server
   * `--http.addr` HTTP-RPC server listening interface (default: `localhost`)
-  * `--http.port` HTTP-RPC server listening port (default: `8545`)
+  * `--http.port` HTTP-RPC server listening port (default: `9506`)
   * `--http.api` API's offered over the HTTP-RPC interface (default: `eth,net,web3`)
   * `--http.corsdomain` Comma separated list of domains from which to accept cross origin requests (browser enforced)
   * `--ws` Enable the WS-RPC server
   * `--ws.addr` WS-RPC server listening interface (default: `localhost`)
-  * `--ws.port` WS-RPC server listening port (default: `8546`)
+  * `--ws.port` WS-RPC server listening port (default: `9507`)
   * `--ws.api` API's offered over the WS-RPC interface (default: `eth,net,web3`)
   * `--ws.origins` Origins from which to accept WebSocket requests
   * `--ipcdisable` Disable the IPC-RPC server
