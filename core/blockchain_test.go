@@ -1,18 +1,18 @@
-// Copyright 2014 The go-ethereum Authors
-// This file is part of the go-ethereum library.
+// Copyright 2014 The go-popcateum Authors
+// This file is part of the go-popcateum library.
 //
-// The go-ethereum library is free software: you can redistribute it and/or modify
+// The go-popcateum library is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Lesser General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 //
-// The go-ethereum library is distributed in the hope that it will be useful,
+// The go-popcateum library is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 // GNU Lesser General Public License for more details.
 //
 // You should have received a copy of the GNU Lesser General Public License
-// along with the go-ethereum library. If not, see <http://www.gnu.org/licenses/>.
+// along with the go-popcateum library. If not, see <http://www.gnu.org/licenses/>.
 
 package core
 
@@ -26,20 +26,20 @@ import (
 	"testing"
 	"time"
 
-	"github.com/ethereum/go-ethereum/common"
-	"github.com/ethereum/go-ethereum/common/math"
-	"github.com/ethereum/go-ethereum/consensus"
-	"github.com/ethereum/go-ethereum/consensus/beacon"
-	"github.com/ethereum/go-ethereum/consensus/ethash"
-	"github.com/ethereum/go-ethereum/core/rawdb"
-	"github.com/ethereum/go-ethereum/core/state"
-	"github.com/ethereum/go-ethereum/core/types"
-	"github.com/ethereum/go-ethereum/core/vm"
-	"github.com/ethereum/go-ethereum/crypto"
-	"github.com/ethereum/go-ethereum/eth/tracers/logger"
-	"github.com/ethereum/go-ethereum/ethdb"
-	"github.com/ethereum/go-ethereum/params"
-	"github.com/ethereum/go-ethereum/trie"
+	"github.com/popcateum/go-popcateum/common"
+	"github.com/popcateum/go-popcateum/common/math"
+	"github.com/popcateum/go-popcateum/consensus"
+	"github.com/popcateum/go-popcateum/consensus/beacon"
+	"github.com/popcateum/go-popcateum/consensus/ethash"
+	"github.com/popcateum/go-popcateum/core/rawdb"
+	"github.com/popcateum/go-popcateum/core/state"
+	"github.com/popcateum/go-popcateum/core/types"
+	"github.com/popcateum/go-popcateum/core/vm"
+	"github.com/popcateum/go-popcateum/crypto"
+	"github.com/popcateum/go-popcateum/eth/tracers/logger"
+	"github.com/popcateum/go-popcateum/ethdb"
+	"github.com/popcateum/go-popcateum/params"
+	"github.com/popcateum/go-popcateum/trie"
 )
 
 // So we can deterministically seed different blockchains
@@ -3316,7 +3316,7 @@ func TestDeleteRecreateSlotsAcrossManyBlocks(t *testing.T) {
 // TestInitThenFailCreateContract tests a pretty notorious case that happened
 // on mainnet over blocks 7338108, 7338110 and 7338115.
 //   - Block 7338108: address e771789f5cccac282f23bb7add5690e1f6ca467c is initiated
-//     with 0.001 ether (thus created but no code)
+//     with 0.001 popcat (thus created but no code)
 //   - Block 7338110: a CREATE2 is attempted. The CREATE2 would deploy code on
 //     the same address e771789f5cccac282f23bb7add5690e1f6ca467c. However, the
 //     deployment fails due to OOG during initcode execution
@@ -3525,7 +3525,7 @@ func TestEIP1559Transition(t *testing.T) {
 		key2, _ = crypto.HexToECDSA("8a1f9a8f95be41cd7ccb6168179afb4504aefe388d1e14474d32c45c72ce7b7a")
 		addr1   = crypto.PubkeyToAddress(key1.PublicKey)
 		addr2   = crypto.PubkeyToAddress(key2.PublicKey)
-		funds   = new(big.Int).Mul(common.Big1, big.NewInt(params.Ether))
+		funds   = new(big.Int).Mul(common.Big1, big.NewInt(params.Popcat))
 		gspec   = &Genesis{
 			Config: params.AllEthashProtocolChanges,
 			Alloc: GenesisAlloc{
@@ -4242,7 +4242,7 @@ func TestEIP3651(t *testing.T) {
 		key2, _ = crypto.HexToECDSA("8a1f9a8f95be41cd7ccb6168179afb4504aefe388d1e14474d32c45c72ce7b7a")
 		addr1   = crypto.PubkeyToAddress(key1.PublicKey)
 		addr2   = crypto.PubkeyToAddress(key2.PublicKey)
-		funds   = new(big.Int).Mul(common.Big1, big.NewInt(params.Ether))
+		funds   = new(big.Int).Mul(common.Big1, big.NewInt(params.Popcat))
 		config  = *params.AllEthashProtocolChanges
 		gspec   = &Genesis{
 			Config: &config,

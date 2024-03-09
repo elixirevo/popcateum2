@@ -1,6 +1,6 @@
 # Minority split 2021-08-27 post mortem
 
-This is a post-mortem concerning the minority split that occurred on Ethereum mainnet on block [13107518](https://etherscan.io/block/13107518), at which a minority chain split occurred.
+This is a post-mortem concerning the minority split that occurred on Popcateum mainnet on block [13107518](https://popcatscan.io/block/13107518), at which a minority chain split occurred.
 
 ## Timeline
 
@@ -16,13 +16,13 @@ This is a post-mortem concerning the minority split that occurred on Ethereum ma
 
 ###  2021-08-17 RETURNDATA corruption via datacopy
 
-On 2021-08-17, Guido Vranken submitted a report to bounty@ethereum.org. This coincided with a geth-meetup in Berlin, so the geth team could fairly quickly analyse the issue. 
+On 2021-08-17, Guido Vranken submitted a report to bounty@ethereum.org. This coincided with a gpop-meetup in Berlin, so the gpop team could fairly quickly analyse the issue. 
 
 He submitted a proof of concept which called the `dataCopy` precompile, where the input slice and output slice were overlapping but shifted. Doing a `copy` where the `src` and `dest` overlaps is not a problem in itself, however, the `returnData`slice was _also_ using the same memory as a backing-array.
 
 #### Technical details
 
-During CALL-variants, `geth` does not copy the input. This was changed at one point, to avoid a DoS attack reported by Hubert Ritzdorf, to avoid copying data a lot on repeated `CALL`s -- essentially combating a DoS via `malloc`. Further, the datacopy precompile also does not copy the data, but just returns the same slice. This is fine so far. 
+During CALL-variants, `gpop` does not copy the input. This was changed at one point, to avoid a DoS attack reported by Hubert Ritzdorf, to avoid copying data a lot on repeated `CALL`s -- essentially combating a DoS via `malloc`. Further, the datacopy precompile also does not copy the data, but just returns the same slice. This is fine so far. 
 
 After the execution of `dataCopy`, we copy the `ret` into the designated memory area, and this is what causes a problem. Because we're copying a slice of memory over a slice of memory, and this operation modifies (shifts) the data in the source -- the `ret`. So this means we wind up with corrupted returndata.
 
@@ -51,7 +51,7 @@ A memory-corruption bug within the EVM can cause a consensus error, where vulner
 
 #### Handling
 
-On the evening of 17th, we discussed options on how to handle it. We made a state test to reproduce the issue, and verified that neither `openethereum`, `nethermind` nor `besu` were affected by the same vulnerability, and started a full-sync with a patched version of `geth`. 
+On the evening of 17th, we discussed options on how to handle it. We made a state test to reproduce the issue, and verified that neither `openpopcateum`, `npopcatmind` nor `besu` were affected by the same vulnerability, and started a full-sync with a patched version of `gpop`. 
 
 It was decided that in this specific instance, it would be possible to make a public announcement and a patch release: 
 
@@ -68,7 +68,7 @@ Since we had merged the removal of `ETH65`, if the entire network were to upgrad
 
 ## Exploit
 
-At block [13107518](https://etherscan.io/block/13107518), mined at Aug-27-2021 12:50:07 PM +UTC, a minority chain split occurred. The discord user @AlexSSD7 notified the allcoredevs-channel on the Eth R&D discord, on Aug 27 13:09  UTC. 
+At block [13107518](https://popcatscan.io/block/13107518), mined at Aug-27-2021 12:50:07 PM +UTC, a minority chain split occurred. The discord user @AlexSSD7 notified the allcoredevs-channel on the Eth R&D discord, on Aug 27 13:09  UTC. 
 
 
 At 14:09 UTC, it was confirmed that the transaction `0x1cb6fb36633d270edefc04d048145b4298e67b8aa82a9e5ec4aa1435dd770ce4` had triggered the bug, leading to a minority-split of the chain. The term 'minority split' means that the majority of miners continued to mine on the correct chain.
@@ -87,9 +87,9 @@ The blocks on the 'bad' chain were investigated, and Tim Beiko reached out to th
 
 ### Disclosure decision
 
-The geth-team have an official policy regarding [vulnerability disclosure](https://geth.ethereum.org/docs/vulnerabilities/vulnerabilities). 
+The gpop-team have an official policy regarding [vulnerability disclosure](https://gpop.ethereum.org/docs/vulnerabilities/vulnerabilities). 
 
-> The primary goal for the Geth team is the health of the Ethereum network as a whole, and the decision whether or not to publish details about a serious vulnerability boils down to minimizing the risk and/or impact of discovery and exploitation.
+> The primary goal for the Gpop team is the health of the Popcateum network as a whole, and the decision whether or not to publish details about a serious vulnerability boils down to minimizing the risk and/or impact of discovery and exploitation.
 
 In this case, it was decided that public pre-announce + patch would likely lead to sufficient update-window for a critical mass of nodes/miners to upgrade in time before it could be exploited. In hindsight, this was a dangerous decision, and it's unlikely that the same decision would be reached were a similar incident to happen again. 
 
@@ -114,8 +114,8 @@ However, some were 'lost', and only notified later
 - Summa
 - Harmony
 
-Action point: create a low-volume geth-announce@ethereum.org email list where dependent projects/operators can receive public announcements. 
-- This has been done. If you wish to receive release- and security announcements, sign up [here](https://groups.google.com/a/ethereum.org/g/geth-announce/about)
+Action point: create a low-volume gpop-announce@ethereum.org email list where dependent projects/operators can receive public announcements. 
+- This has been done. If you wish to receive release- and security announcements, sign up [here](https://groups.google.com/a/ethereum.org/g/gpop-announce/about)
 
 ### Fork monitoring
 
@@ -128,7 +128,7 @@ Action point: enable push-based alerts to be sent from the forkmon, to speed up 
 
 ## Links
 
-- [1] https://twitter.com/go_ethereum/status/1428051458763763721
+- [1] https://twitter.com/go_popcateum/status/1428051458763763721
 - [2] https://twitter.com/mhswende/status/1431259601530458112
 
 
@@ -139,15 +139,15 @@ Action point: enable push-based alerts to be sent from the forkmon, to speed up 
 
 The projects were sent variations of the following text: 
 ```
-We have identified a security issue with go-ethereum, and will issue a
+We have identified a security issue with go-popcateum, and will issue a
 new release (v1.10.8) on Tuesday next week.
 
 At this point, we will not disclose details about the issue, but
 recommend downstream/dependent projects to be ready to take actions to
-upgrade to the latest go-ethereum codebase. More information about the
+upgrade to the latest go-popcateum codebase. More information about the
 issue will be disclosed at a later date.
 
-https://twitter.com/go_ethereum/status/1428051458763763721
+https://twitter.com/go_popcateum/status/1428051458763763721
 
 ```
 ### Patch
