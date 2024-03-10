@@ -72,9 +72,9 @@ var (
 		BerlinBlock:                   big.NewInt(0),
 		PopSongBlock:                  big.NewInt(85_000),
 		PopcornBlock:                  big.NewInt(4_000_000),
-		LondonBlock:                   nil,
-		ArrowGlacierBlock:             nil,
-		GrayGlacierBlock:              nil,
+		LondonBlock:                   big.NewInt(8_905_000),
+		ArrowGlacierBlock:             big.NewInt(8_905_000),
+		GrayGlacierBlock:              big.NewInt(8_905_000),
 		TerminalTotalDifficulty:       nil, // 58_750_000_000_000_000_000_000
 		TerminalTotalDifficultyPassed: false,
 		ShanghaiTime:                  nil,
