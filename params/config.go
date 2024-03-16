@@ -76,7 +76,7 @@ var (
 		LondonBlock:                   big.NewInt(8_905_000),
 		ArrowGlacierBlock:             big.NewInt(8_905_000),
 		GrayGlacierBlock:              big.NewInt(8_905_000),
-		TerminalTotalDifficulty:       MainnetTerminalTotalDifficulty, // 58_750_000_000_000_000_000_000
+		TerminalTotalDifficulty:       nil, // 58_750_000_000_000_000_000_000
 		TerminalTotalDifficultyPassed: false,
 		ShanghaiTime:                  nil,
 		Ethash:                        new(EthashConfig),
